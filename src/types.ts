@@ -14,3 +14,6 @@ export type LocalStorageTracks = {
   datestamp: number;
   tracks: TracksResponse[];
 };
+
+export type Log = string;
+export type Logs = Log[];

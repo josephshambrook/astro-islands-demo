@@ -26,7 +26,7 @@
     }
 
     const rawResponse = await fetch(
-      "https://spotify-worker.josephshambrook.workers.dev/top?limit=5"
+      "https://spotify-worker.josephshambrook.workers.dev/top?limit=5",
     ).catch(() => {});
 
     if (rawResponse && rawResponse?.status === 200) {
@@ -52,6 +52,26 @@
   let tracks = fetchTracks();
 </script>
 
+{#await tracks}
+  <p>Loading</p>
+{:then tracks}
+  <ul class="list">
+    {#each tracks as track}
+      <li class="track">
+        <div class="track-name">
+          <a
+            href={track.href}
+            title={`Open "${track.name}" on Spotify`}
+            target="_blank"
+            rel="noopener noreferrer">{track.name}</a
+          >
+        </div>
+        <div>{track.artist}</div>
+      </li>
+    {/each}
+  </ul>
+{/await}
+
 <style>
   .list {
     list-style: none;
@@ -72,23 +92,3 @@
     font-weight: bold;
   }
 </style>
-
-{#await tracks}
-  <p>Loading</p>
-{:then tracks}
-  <ul class="list">
-    {#each tracks as track}
-      <li class="track">
-        <div class="track-name">
-          <a
-            href={track.href}
-            title={`Open "${track.name}" on Spotify`}
-            target="_blank"
-            rel="noopener noreferrer">{track.name}</a
-          >
-        </div>
-        <div>{track.artist}</div>
-      </li>
-    {/each}
-  </ul>
-{/await}

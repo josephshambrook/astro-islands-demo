@@ -1,6 +1,20 @@
 <script lang="ts">
-  const logs = [];
+  import type { Logs } from "src/types";
+
+  const logs: Logs = [];
 </script>
+
+{#if logs.length}
+  <ul class="list">
+    {#each logs as log}
+      <li class="log">
+        {log}
+      </li>
+    {/each}
+  </ul>
+{:else}
+  <p>No logs, yet</p>
+{/if}
 
 <style>
   .list {
@@ -15,15 +29,3 @@
     padding-block-end: 0.6rem;
   }
 </style>
-
-{#if logs.length}
-  <ul class="list">
-    {#each logs as log}
-      <li class="log">
-        {log}
-      </li>
-    {/each}
-  </ul>
-{:else}
-  <p>No logs, yet</p>
-{/if}

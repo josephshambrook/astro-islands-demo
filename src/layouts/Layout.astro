@@ -1,6 +1,6 @@
 ---
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,68 +8,68 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<header>
-			<!-- <h1>🏝️ <span class="text-gradient">Astro</span> Islands Demo</h1> -->
-			<h1>🏝️ Astro Islands Demo</h1>
-		</header>
-		<slot name="main" />
-		<slot name="aside" />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <!-- <h1>🏝️ <span class="text-gradient">Astro</span> Islands Demo</h1> -->
+      <h1>🏝️ Astro Islands Demo</h1>
+    </header>
+    <slot name="main" />
+    <slot name="aside" />
+  </body>
 </html>
 
 <style>
-	html {
-		background: #22BED9;
-		color: #111;
-		font-family: system-ui, sans-serif;
-		font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 1.3889)), 2rem);
-  min-height: 0vw;
-	}
+  html {
+    background: #22bed9;
+    color: #111;
+    font-family: system-ui, sans-serif;
+    font-size: clamp(1rem, calc(1rem + ((1vw - 0.48rem) * 1.3889)), 2rem);
+    min-height: 0vw;
+  }
 
-	body {
-		display: grid;
-		font-size: 20px;
-		gap: 32px;
-		grid-template-columns: 1fr;
-		line-height: 1.6;
-		margin-inline: auto;
-		max-width: 840px;
-		padding: 16px;
-	}
+  body {
+    display: grid;
+    font-size: 20px;
+    gap: 32px;
+    grid-template-columns: 1fr;
+    line-height: 1.6;
+    margin-inline: auto;
+    max-width: 840px;
+    padding: 16px;
+  }
 
-	@media screen and (min-width: 1100px) {
-		body {
-			gap: 0 32px;
-			grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-			max-width: 1100px;
-		}
-	}
+  @media screen and (min-width: 1100px) {
+    body {
+      gap: 0 32px;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      max-width: 1100px;
+    }
+  }
 
-	header {
-		grid-column: 1 / -1;
-	}
+  header {
+    grid-column: 1 / -1;
+  }
 
-	h1 {
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-block-end: 1.5em;
-	}
+  h1 {
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-block-end: 1.5em;
+  }
 
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
 </style>
