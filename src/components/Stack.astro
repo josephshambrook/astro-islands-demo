@@ -1,0 +1,29 @@
+---
+interface Props {
+	tag?: string;
+  space?: string;
+}
+
+const { tag = 'div', space = '1.5rem', ...rest } = Astro.props;
+const Element = tag;
+---
+
+<Element class:list={['stack']} {...rest}>
+  <slot />
+</Element>
+
+<style define:vars={{ space }}>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .stack :global(> *) {
+    margin-block: 0;
+  }
+
+  .stack :global(> * + *) {
+    margin-block-start: var(--space, 1.5rem);
+  }
+</style>

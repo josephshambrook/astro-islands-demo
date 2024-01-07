@@ -1,0 +1,20 @@
+---
+import Stack from "./Stack.astro";
+
+---
+
+<section class="island">
+  <Stack>
+    <slot name="title" />
+    <slot />
+  </Stack>
+</section>
+
+<style>
+  .island {
+    background-color: var(--accent);
+    border: #E9D59C 8px solid;
+    border-radius: 16px;
+    padding: 16px;
+  }
+</style>

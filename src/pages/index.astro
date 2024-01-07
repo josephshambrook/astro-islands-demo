@@ -1,0 +1,99 @@
+---
+import Layout from '@layouts/Layout.astro';
+import SpotifyList from '@components/SpotifyList.svelte';
+import Island from '@components/Island.astro';
+import Stack from '@components/Stack.astro';
+import Quote from '@components/Quote.astro';
+import Logs from '@components/Logs.svelte';
+import Section from '@components/Section.astro';
+---
+
+<Layout title="Astro Islands demo">
+	<aside slot="aside">
+		<Island>
+			<h2 slot="title">Logs</h2>
+			<Logs />
+		</Island>
+	</aside>
+
+	<main slot="main">
+		<Stack space="2.5rem">
+			<Section>
+				<p>Hello! 👋</p>
+				<p>This is my demo of client-side 🏝️ Islands within Astro; a nifty architecture principle that allows flexibility with developing components, improves rendering performance of a website, and allows Astro to render multiple UI frameworks <strong>at the same time within the same website</strong>.</p>
+
+				<p>This page contains a few components that are rendered as islands, and styled as such to stand out.</p>
+			</Section>
+
+			<hr />
+
+			<Section>
+				<h2>A bit more in-depth</h2>
+
+				<p>To quote Astro directly:</p>
+
+				<Quote>An “island” refers to any interactive UI component on the page. Think of an island as an interactive widget floating in a sea of otherwise static, lightweight, server-rendered HTML.</Quote>
+
+				<p>Astro renders all components without JavaScript by default, meaning that it only cares about the text that a component outputs, and not any interactivity included with it. If you have a component called <code>&lt;Title /&gt;</code></p>
+
+				<p>When a component contains some sort of interactivity, that component needs to be specifically told to be rendered on the client (i.e. the browser) with JavaScript included.</p>
+			</Section>
+
+			<Island>
+				<h2 slot="title">Recent top tunes</h2>
+				<SpotifyList client:idle />
+			</Island>
+		</Stack>
+		</main>
+</Layout>
+
+<style is:global>
+	:root {
+		--accent-base: 72, 50%;
+		--accent: hsl(var(--accent-base), 50%);
+		--accent-dark: hsl(var(--accent-base), 30%);
+
+		--accent-gradient: linear-gradient(
+			45deg,
+			var(--accent),
+			var(--accent-dark) 30%,
+			white 60%
+		);
+	}
+
+	code {
+    background-color: hsl(0 0% 100% / 0.4);
+    border-radius: 6px;
+		font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 85%;
+    margin: 0;
+		padding: 0.2em 0.4em;
+    white-space: break-spaces;
+	}
+
+	hr{
+		background-color: hsl(180.91deg 80.87% 59.77%);
+    border: none;
+		--mask:
+			radial-gradient(39.17px at 50% calc(100% + 27.50px),#0000 calc(99% - 4px),#000 calc(101% - 4px) 99%,#0000 101%) calc(50% - 50px) calc(50% - 14.5px + .5px)/100px 29px repeat-x,
+			radial-gradient(39.17px at 50% -27.5px,#0000 calc(99% - 4px),#000 calc(101% - 4px) 99%,#0000 101%) 50% calc(50% + 14.5px)/100px 29px repeat-x;
+		-webkit-mask: var(--mask);
+		mask: var(--mask);
+		content: '';
+		display:block;
+		position:relative;
+		width: 100%;
+		height: 25px;
+	}
+
+	.box {
+  --mask:
+    radial-gradient(90.02px at 50% calc(100% + 70.00px),#0000 calc(99% - 8px),#000 calc(101% - 8px) 99%,#0000 101%) calc(50% - 100px) calc(50% - 29px + .5px)/200px 58px repeat-x,
+    radial-gradient(90.02px at 50% -70px,#0000 calc(99% - 8px),#000 calc(101% - 8px) 99%,#0000 101%) 50% calc(50% + 29px)/200px 58px repeat-x;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+}
+</style>
+
+<style>
+</style>
