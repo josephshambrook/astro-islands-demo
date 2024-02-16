@@ -1,12 +1,14 @@
 <script lang="ts">
-  import type { Logs } from "src/types";
+  import { logs } from "@state/LogStore";
 
-  const logs: Logs = [];
+  // on load, lets populate the logs
+  // clearLogs();
+  // addLog("Started!");
 </script>
 
-{#if logs.length}
+{#if $logs.length}
   <ul class="list">
-    {#each logs as log}
+    {#each $logs as log}
       <li class="log">
         {log}
       </li>

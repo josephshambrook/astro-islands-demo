@@ -1,27 +1,22 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import SpotifyList from "@components/SpotifyList.svelte";
+import Divider from "@components/Divider.astro";
 import Island from "@components/Island.astro";
-import Stack from "@components/Stack.astro";
-import Quote from "@components/Quote.astro";
 import Logs from "@components/Logs.svelte";
+import Quote from "@components/Quote.astro";
 import Section from "@components/Section.astro";
+import SpotifyList from "@components/SpotifyList.svelte";
+import Stack from "@components/Stack.astro";
+import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="Astro Islands demo">
-  <aside slot="aside">
-    <Island>
-      <h2 slot="title">Logs</h2>
-      <Logs />
-    </Island>
-  </aside>
-
   <main slot="main">
     <Stack space="2.5rem">
       <Section>
         <p>Hello! 👋</p>
         <p>
-          This is my demo of client-side 🏝️ Islands within Astro; a nifty
+          This is my demo of client-side 🏝️ Islands within Astro, a nifty
           architecture principle that allows flexibility with developing
           components, improves rendering performance of a website, and allows
           Astro to render multiple UI frameworks <strong
@@ -35,7 +30,7 @@ import Section from "@components/Section.astro";
         </p>
       </Section>
 
-      <hr />
+      <Divider />
 
       <Section>
         <h2>A bit more in-depth</h2>
@@ -50,101 +45,111 @@ import Section from "@components/Section.astro";
 
         <p>
           Astro renders all components without JavaScript by default, meaning
-          that it only cares about the text that a component outputs, and not
-          any interactivity included with it. If you have a component called <code
-            >&lt;Title /&gt;</code>
+          that it only cares about the content that a component outputs after
+          rendering, and nothing else.
         </p>
 
         <p>
-          When a component contains some sort of interactivity, that component
-          needs to be specifically told to be rendered on the client (i.e. the
-          browser) with JavaScript included.
+          When a component contains some sort of interactivity though, that
+          component needs to be specifically told to be bring the JavaScript
+          necessary with it to add that interactivity.
+        </p>
+
+        <p>
+          Enough waffling, how about an example? Below is a component I've
+          created that makes a Fetch call to an API, which grabs 5 of my
+          most-played songs recently from my own Spotify account. The component
+          takes that response and renders the list of tracks.
         </p>
       </Section>
 
       <Island>
-        <h2 slot="title">Recent top tunes</h2>
-        <SpotifyList client:idle />
+        <h2 slot="title">Joe's recent top tunes</h2>
+        <h3>Thanks to <Icon name="bi:spotify" size={24} /> Spotify</h3>
+        <SpotifyList client:visible />
       </Island>
+
+      <Section>
+        <p></p>
+      </Section>
     </Stack>
   </main>
+
+  <aside slot="aside">
+    <Island class="sticky">
+      <h2 slot="title">Logs</h2>
+      <Logs client:load />
+    </Island>
+  </aside>
 </Layout>
 
 <style is:global>
   :root {
-    --accent-base: 72, 50%;
-    --accent: hsl(var(--accent-base), 50%);
-    --accent-dark: hsl(var(--accent-base), 30%);
+    --step--1: clamp(0.9375rem, 0.9148rem + 0.1136vw, 1rem);
+    --step-0: clamp(1.125rem, 1.0795rem + 0.2273vw, 1.25rem);
+    --step-1: clamp(1.35rem, 1.2727rem + 0.3864vw, 1.5625rem);
+    --step-2: clamp(1.62rem, 1.4989rem + 0.6057vw, 1.9531rem);
+    --step-3: clamp(1.9438rem, 1.7628rem + 0.9045vw, 2.4413rem);
+    --step-4: clamp(2.3325rem, 2.0709rem + 1.308vw, 3.0519rem);
+    --step-5: clamp(2.7994rem, 2.4301rem + 1.8466vw, 3.815rem);
 
-    --accent-gradient: linear-gradient(
-      45deg,
-      var(--accent),
-      var(--accent-dark) 30%,
-      white 60%
-    );
+    /* colors */
+    --color-sea: hsl(188.85, 72.91%, 49.22%);
+    --color-beach: hsl(44.42, 63.64%, 76.27%);
+    --color-land: hsl(72 50% 50%);
   }
 
-  code {
-    background-color: hsl(0 0% 100% / 0.4);
-    border-radius: 6px;
-    font-family:
-      ui-monospace,
-      SFMono-Regular,
-      SF Mono,
-      Menlo,
-      Consolas,
-      Liberation Mono,
-      monospace;
-    font-size: 85%;
-    margin: 0;
-    padding: 0.2em 0.4em;
-    white-space: break-spaces;
+  body {
+    background-color: var(--color-sea);
+    color: #111;
+    display: grid;
+    font-family: system-ui, sans-serif;
+    font-size: var(--step-0);
+    /* fixes a safari issue with font-size and clamp */
+    min-height: 0vw;
+    gap: 32px;
+    grid-template-columns: 1fr;
+    line-height: 1.6;
+    margin-inline: auto;
+    max-width: 840px;
+    padding: 16px;
   }
 
-  hr {
-    background-color: hsl(180.91deg 80.87% 59.77%);
-    border: none;
-    --mask: radial-gradient(
-          39.17px at 50% calc(100% + 27.5px),
-          #0000 calc(99% - 4px),
-          #000 calc(101% - 4px) 99%,
-          #0000 101%
-        )
-        calc(50% - 50px) calc(50% - 14.5px + 0.5px) / 100px 29px repeat-x,
-      radial-gradient(
-          39.17px at 50% -27.5px,
-          #0000 calc(99% - 4px),
-          #000 calc(101% - 4px) 99%,
-          #0000 101%
-        )
-        50% calc(50% + 14.5px) / 100px 29px repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
-    content: "";
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 25px;
+  @media screen and (min-width: 1100px) {
+    body {
+      gap: 0 32px;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      max-width: 1200px;
+    }
   }
 
-  .box {
-    --mask: radial-gradient(
-          90.02px at 50% calc(100% + 70px),
-          #0000 calc(99% - 8px),
-          #000 calc(101% - 8px) 99%,
-          #0000 101%
-        )
-        calc(50% - 100px) calc(50% - 29px + 0.5px) / 200px 58px repeat-x,
-      radial-gradient(
-          90.02px at 50% -70px,
-          #0000 calc(99% - 8px),
-          #000 calc(101% - 8px) 99%,
-          #0000 101%
-        )
-        50% calc(50% + 29px) / 200px 58px repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
+  /* typography */
+  :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: bold;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: var(--step-4);
+  }
+  h2 {
+    font-size: var(--step-2);
+  }
+  /* h3 {
+    font-size: var(--step-3);
+  }
+  h4 {
+    font-size: var(--step-2);
+  }
+  h5 {
+    font-size: var(--step-1);
+  }
+  h6 {
+    font-size: var(--step-0);
+  } */
+
+  .sticky {
+    position: sticky;
+    top: 20px;
   }
 </style>
-
-<style></style>

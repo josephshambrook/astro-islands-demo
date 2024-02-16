@@ -1,5 +1,5 @@
 {
-  "name": "@example/basics",
+  "name": "@josephshambrook/astro-islands-demo",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -7,15 +7,17 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",
     "@astrojs/svelte": "^5.0.1",
+    "@iconify-json/bi": "^1.1.23",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "astro": "^4.0.6",
+    "astro-icon": "^1.0.3",
+    "nanostores": "^0.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

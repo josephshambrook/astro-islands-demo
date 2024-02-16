@@ -1,8 +1,9 @@
 ---
 import Stack from "./Stack.astro";
+const { class: classes, ...rest } = Astro.props;
 ---
 
-<section class="island">
+<section class:list={["island", classes]} {...rest}>
   <Stack>
     <slot name="title" />
     <slot />
@@ -11,9 +12,10 @@ import Stack from "./Stack.astro";
 
 <style>
   .island {
-    background-color: var(--accent);
-    border: #e9d59c 8px solid;
+    background-color: var(--color-land);
+    border: var(--color-beach) 8px solid;
     border-radius: 16px;
+    box-shadow: 0 0 2px 5px hsla(0 0% 0% / 0.1);
     padding: 16px;
   }
 </style>

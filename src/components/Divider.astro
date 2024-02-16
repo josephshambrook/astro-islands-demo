@@ -1,0 +1,32 @@
+<hr />
+
+<style>
+  hr {
+    /* the wavy line */
+    background-color: hsl(180.91deg 80.87% 59.77%);
+    border: none;
+    --mask: radial-gradient(
+          39.17px at 50% calc(100% + 27.5px),
+          #0000 calc(99% - 4px),
+          #000 calc(101% - 4px) 99%,
+          #0000 101%
+        )
+        calc(50% - 50px) calc(50% - 14.5px + 0.5px) / 100px 29px repeat-x,
+      radial-gradient(
+          39.17px at 50% -27.5px,
+          #0000 calc(99% - 4px),
+          #000 calc(101% - 4px) 99%,
+          #0000 101%
+        )
+        50% calc(50% + 14.5px) / 100px 29px repeat-x;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+
+    content: "";
+    display: block;
+    height: 25px;
+    padding-block: 2rem;
+    position: relative;
+    width: 100%;
+  }
+</style>
