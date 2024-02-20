@@ -157,11 +157,11 @@ import { Image } from "astro:assets";
         When React arrived and gained a massive amount of popularity in the
         mid-2010s, it turned websites into full JavaScript machines whether they
         needed it or not. The HTML shipped to the browser typically contained a
-        single element (usually <Code code='<div id="app"></div>' />), and the
-        entire website was rendered with JavaScript into that element. It meant
-        the burden of rendering a website was passed onto the browser, rather
-        than rendered on the server like websites built with your favourite
-        languages like PHP.
+        single element (usually <Code code='<div id="app"></div>' inline />),
+        and the entire website was rendered with JavaScript into that element.
+        It meant the burden of rendering a website was passed onto the browser,
+        rather than rendered on the server like websites built with your
+        favourite languages like PHP.
       </p>
 
       <p>
@@ -190,7 +190,7 @@ import { Image } from "astro:assets";
     <Fragment slot="content">
       <h2 class="text-3xl font-bold">Islands within Astro</h2>
       <p>[Details of how islands are used within Astro]</p>
-      <p>Code: <Code code="<Carousel client:idle />" /></p>
+      <p>Code: <Code code="<Carousel client:idle />" inline /></p>
     </Fragment>
   </Section>
 

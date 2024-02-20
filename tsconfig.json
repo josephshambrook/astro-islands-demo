@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "baseUrl": "/Users/josephshambrook/dev/astro-islands-demo",
+    "baseUrl": "./",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
