@@ -17,3 +17,13 @@ export type LocalStorageTracks = {
 
 export type Log = string;
 export type Logs = Log[];
+
+export type PromptContentType = {
+  key: "song" | "poem" | "film-plot" | "book-idea";
+  text: string;
+};
+
+export type PromptResponse = {
+  prompt: string;
+  result: string;
+};

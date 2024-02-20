@@ -1,9 +1,14 @@
-<hr />
+---
+const props = Astro.props;
+---
+
+<hr {...props} />
 
 <style>
   hr {
     /* the wavy line */
-    background-color: hsl(180.91deg 80.87% 59.77%);
+    /* Absolutely no point trying to do this in Tailwind! */
+    background-color: #fff;
     border: none;
     --mask: radial-gradient(
           39.17px at 50% calc(100% + 27.5px),
@@ -25,8 +30,9 @@
     content: "";
     display: block;
     height: 25px;
+    margin-inline: auto;
     padding-block: 2rem;
     position: relative;
-    width: 100%;
+    width: 80%;
   }
 </style>

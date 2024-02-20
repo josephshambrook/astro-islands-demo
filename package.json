@@ -10,20 +10,32 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/react": "^3.0.9",
-    "@astrojs/svelte": "^5.0.1",
+    "@astrojs/prism": "^3.0.0",
+    "@astrojs/react": "^3.0.10",
+    "@astrojs/solid-js": "^4.0.1",
+    "@astrojs/svelte": "^5.0.3",
+    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/vue": "^4.0.8",
     "@iconify-json/bi": "^1.1.23",
-    "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18",
-    "astro": "^4.0.6",
-    "astro-icon": "^1.0.3",
+    "@tanstack/solid-query": "^5.22.2",
+    "@tanstack/vue-query": "^5.22.2",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "astro": "^4.4.0",
+    "astro-icon": "^1.1.0",
+    "chart.js": "^4.4.1",
     "nanostores": "^0.9.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "solid-js": "^1.8.15",
+    "tailwindcss": "^3.4.1",
+    "tailwindcss-fluid-type": "^2.0.3",
+    "vue": "^3.4.19"
   },
   "devDependencies": {
-    "prettier": "^3.1.1",
-    "prettier-plugin-astro": "^0.12.3",
-    "prettier-plugin-svelte": "^3.1.2"
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-svelte": "^3.2.1"
   }
 }

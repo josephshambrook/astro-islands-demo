@@ -1,28 +1,24 @@
 ---
-interface Props {
-  code: string;
-}
+import type { ComponentProps } from "astro/types";
+import { Code as AstroCode } from "astro:components";
 
-const { code } = Astro.props;
+interface Props extends ComponentProps<typeof AstroCode> {}
+
+const props = Astro.props;
 ---
 
-<code>{code}</code>
+<AstroCode {...props} />
 
 <style>
-  code {
-    background-color: hsl(0 0% 100% / 0.4);
-    border-radius: 6px;
-    font-family:
-      ui-monospace,
-      SFMono-Regular,
-      SF Mono,
-      Menlo,
-      Consolas,
-      Liberation Mono,
-      monospace;
-    font-size: 85%;
-    margin: 0;
-    padding: 0.2em 0.4em;
-    white-space: break-spaces;
+  :global(pre:has(code), :not(pre) > code) {
+    @apply font-mono rounded-md text-[length:85%] m-0 whitespace-break-spaces;
+  }
+
+  :global(pre:has(code)) {
+    @apply px-6;
+  }
+
+  :global(:not(pre) > code) {
+    @apply px-2 py-1;
   }
 </style>

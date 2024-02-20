@@ -7,7 +7,7 @@
 </script>
 
 {#if $logs.length}
-  <ul class="list">
+  <ul class="list-none pl-0">
     {#each $logs as log}
       <li class="log">
         {log}
@@ -19,12 +19,8 @@
 {/if}
 
 <style>
-  .list {
-    list-style: none;
-    padding-inline-start: 0;
-  }
-
-  .list > .log:not(:last-of-type) {
+  /* Hacky because meh with chaining all of these with `[&:not(:last-child)]:` */
+  ul > .log:not(:last-of-type) {
     border-block-end: 2px solid;
     border-image-slice: 1;
     margin-block-end: 0.5rem;

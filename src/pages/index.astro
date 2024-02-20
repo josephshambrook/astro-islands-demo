@@ -1,155 +1,376 @@
 ---
-import Divider from "@components/Divider.astro";
+import Code from "@components/Code.astro";
 import Island from "@components/Island.astro";
-import Logs from "@components/Logs.svelte";
+import Link from "@components/Link.astro";
 import Quote from "@components/Quote.astro";
 import Section from "@components/Section.astro";
-import SpotifyList from "@components/SpotifyList.svelte";
-import Stack from "@components/Stack.astro";
-import Layout from "@layouts/Layout.astro";
+import emptyDevToolsScreenshot from "@images/empty-devtools.png";
+import fathomAnnotatedScreenshot from "@images/fathom-screenshot-annotated.png";
+import fathomScreenshot from "@images/fathom-screenshot.png";
+import alamanacReportImage from "@images/web-almanac-js-by-year.png";
+import Chatty from "@islands/Chatty.vue";
+import { Graph } from "@islands/Graph.react";
+import Logs from "@islands/Logs.svelte";
+import SpotifyList from "@islands/SpotifyList.svelte";
+import Base from "@layouts/Base.astro";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 ---
 
-<Layout title="Astro Islands demo">
-  <main slot="main">
-    <Stack space="2.5rem">
-      <Section>
-        <p>Hello! 👋</p>
-        <p>
-          This is my demo of client-side 🏝️ Islands within Astro, a nifty
-          architecture principle that allows flexibility with developing
-          components, improves rendering performance of a website, and allows
-          Astro to render multiple UI frameworks <strong
-            >at the same time within the same website</strong
-          >.
-        </p>
+<Base>
+  <Section withDivider>
+    <Fragment slot="content">
+      <p>Hello! 👋</p>
+      <p>
+        This is a demo of how the 🏝️ Islands architecture principle is
+        implemented within 🚀 Astro, and accompanies my "Astro Islands: Beyond
+        Framework Borders" talk.
+      </p>
 
-        <p>
-          This page contains a few components that are rendered as islands, and
-          styled as such to stand out.
-        </p>
-      </Section>
+      <p>
+        This demo aims to explain the logic behind the principle, why it exists,
+        and how it is implemented within the web framework Astro to provide
+        better performance.
+      </p>
 
-      <Divider />
+      <p>
+        This page contains a few components that are rendered as islands, and
+        styled as such to stand out.
+      </p>
+    </Fragment>
+  </Section>
 
-      <Section>
-        <h2>A bit more in-depth</h2>
+  <Section withDivider>
+    <Fragment slot="content">
+      <h2 class="text-3xl font-bold">About Islands</h2>
 
-        <p>To quote Astro directly:</p>
+      <p>Let's quote Astro directly first:</p>
 
-        <Quote>
-          An “island” refers to any interactive UI component on the page. Think
-          of an island as an interactive widget floating in a sea of otherwise
-          static, lightweight, server-rendered HTML.
-        </Quote>
+      <Quote>
+        An “island” refers to any interactive UI component on the page. Think of
+        an island as an interactive widget floating in a sea of otherwise
+        static, lightweight, server-rendered HTML.
+      </Quote>
 
-        <p>
-          Astro renders all components without JavaScript by default, meaning
-          that it only cares about the content that a component outputs after
-          rendering, and nothing else.
-        </p>
+      <p>
+        The islands architecture is a principle of only shipping JavaScript for
+        specific parts of a webpage or website, rather than the whole page. When
+        a website only contains a few components that require any interactivity,
+        it makes less sense for the static parts, like text and images, to also
+        be rendered with JavaScript.
+      </p>
 
-        <p>
-          When a component contains some sort of interactivity though, that
-          component needs to be specifically told to be bring the JavaScript
-          necessary with it to add that interactivity.
-        </p>
+      <p>
+        Let's look at an example of a website that would benefit from the
+        islands architecture. <Link
+          href="https://usefathom.com/#"
+          text="Fathom Analytics"
+        /> is a privacy-conscious analytics provider that I've enjoyed using, and
+        have a landing page with fairly minimal JavaScript, so I'll use that. Here's
+        their landing page (as of February 2024):
+      </p>
 
-        <p>
-          Enough waffling, how about an example? Below is a component I've
-          created that makes a Fetch call to an API, which grabs 5 of my
-          most-played songs recently from my own Spotify account. The component
-          takes that response and renders the list of tracks.
-        </p>
-      </Section>
+      <Image
+        src={fathomScreenshot}
+        alt="The Fathom Analytics landing page, as of February 2024"
+        width="500"
+        class="mx-auto max-w-full"
+      />
+
+      <p>
+        This page has a single bit of interactivity above the fold (i.e. the
+        bottom of the browser window), which is the Menu button in the top-right
+        corner. Clicking the Menu button opens a side menu containing further
+        links. Let's visualise this as a sea of content highlighted in blue,
+        with the interactive part highlighted in green:
+      </p>
+
+      <Image
+        src={fathomAnnotatedScreenshot}
+        alt="An annotated version of the Fathom Analytics landing page, showing the content highlighted in blue, and the Menu button highlighted in green"
+        width="500"
+        class="mx-auto max-w-full"
+      />
+
+      <p>
+        As you can see, JavaScript is used for a minimal part of this webpage.
+        The rest is content that can be rendered on the server, and sent as HTML
+        and CSS only. There is no need for JavaScript to render that content.
+      </p>
+    </Fragment>
+  </Section>
+
+  <Section withDivider>
+    <Fragment slot="content">
+      <h2 class="text-3xl font-bold">Why are Islands a good thing?</h2>
+      <p>
+        Because the web has unfortunately begun to load excessive amounts of
+        JavaScript, sometimes needlessly, and sometimes as a result of popular
+        web frameworks like React.
+      </p>
+
+      <p>
+        The <Link
+          href="https://almanac.httparchive.org/en/2022/"
+          text="Web Almanac"
+        /> is an annual report carried out by HTTP Archive, an open-source initiative
+        to analyze the current state of the public Internet by crawling websites
+        and recording detailed information. Their last 4 reports (<Link
+          href="https://almanac.httparchive.org/en/2019/"
+          text="2019"
+        />, <Link
+          href="https://almanac.httparchive.org/en/2020/"
+          text="2020"
+        />, <Link href="https://almanac.httparchive.org/en/2021/" text="2021" />
+        and <Link
+          href="https://almanac.httparchive.org/en/2022/"
+          text="2022"
+        />) were released, and shows details of JavaScript usage across these
+        websites, amongst a bunch of other statistics.
+      </p>
+
+      <p>
+        Year-on-year, the reports have found the mean amount of JavaScript
+        shipped to browsers per webpage has increased, both on desktop and
+        mobile.
+      </p>
+
+      <Image
+        src={alamanacReportImage}
+        alt="A graph showing the mean amount of JavaScript increasing year-on-year"
+        width="500"
+        class="mx-auto max-w-full"
+      />
+
+      <p>
+        Shipping JavaScript to the browsers is sometimes an enjoyable necessity,
+        but overuse can result in:
+      </p>
+
+      <ul class="list-disc list-inside">
+        <li>Increased page loading times for downloading and parsing</li>
+        <li>Blocks rendering of other page content</li>
+        <li>Higher device resource usage, such as the device's battery</li>
+      </ul>
+
+      <p>
+        When React arrived and gained a massive amount of popularity in the
+        mid-2010s, it turned websites into full JavaScript machines whether they
+        needed it or not. The HTML shipped to the browser typically contained a
+        single element (usually <Code code='<div id="app"></div>' />), and the
+        entire website was rendered with JavaScript into that element. It meant
+        the burden of rendering a website was passed onto the browser, rather
+        than rendered on the server like websites built with your favourite
+        languages like PHP.
+      </p>
+
+      <p>
+        Since the hey-day of React and other JavaScript UI libraries and
+        frameworks, other frameworks have popped up to bring different rendering
+        strategies and improve rendering performance. The main one for React is
+        arguably Next.js, which renders as much of the React codebase on the
+        server as it can, and streams the resulting HTML to the browser, as well
+        as JavaScript to "hydrate" the page (i.e. load and parse the JavaScript,
+        and make any components that need it interactive).
+      </p>
+
+      <p>
+        While this approach did work to improve performance, it still came with
+        a caveat. Next.js needs to hydrate <strong>the whole page</strong>,
+        static content included, and not just the components that actually need
+        interactivity. This means there is still a potentially-substantial
+        amount of JavaScript being sent to the browser to parse. The islands
+        architecture contrasts this by only shipping JavaScript for the
+        components that actually need it.
+      </p>
+    </Fragment>
+  </Section>
+
+  <Section withDivider>
+    <Fragment slot="content">
+      <h2 class="text-3xl font-bold">Islands within Astro</h2>
+      <p>[Details of how islands are used within Astro]</p>
+      <p>Code: <Code code="<Carousel client:idle />" /></p>
+    </Fragment>
+  </Section>
+
+  <Section withDivider>
+    <Fragment slot="content">
+      <h2 class="text-3xl font-bold">Demo time!</h2>
+      <p>Enough waffling, how about some live examples?</p>
+
+      <p>
+        First off, this webpage is created in Astro, and contains a mix of
+        static Astro components, and UI libraries like React and Svelte just for
+        fun.
+      </p>
+
+      <p>
+        If you happen to be viewing this on a desktop browser, you could scroll
+        up to the top of the page, open up the browser developer tools, go to
+        the Network tab, and then hit refresh in the browser, you should see
+        zero JavaScript resources being loaded. For those viewing this on a
+        mobile browser, it should look like this:
+      </p>
+
+      <figure>
+        <Image
+          src={emptyDevToolsScreenshot}
+          alt="The Chrome DevTools pane, with the Network tab showing, and an empty list of resources filtered by JavaScript is visible"
+          width="600"
+          class="mx-auto max-w-full"
+        />
+        <figcaption class="text-xs text-center">
+          The list of resources has been filtered by JS, and is therefore empty
+        </figcaption>
+      </figure>
+
+      <p>
+        Now that you've scrolled down to this section though, there would have
+        been some JavaScript popping up. That JavaScript is powering the island
+        on the right, which will display logs as we interact with the islands
+        below. However, because the logs are not viewable by those on a mobile
+        device, the JavaScript would not have been loaded for that island! The
+        logs that are displayed within that island are being stored in a local
+        JavaScript store, powered by a dependency called <Link
+          href="https://github.com/nanostores/nanostores"
+          text="nanostores"
+        />.
+      </p>
+
+      <p>
+        Time for our first demo island. Earlier, I showed an image of a graph,
+        visualising the increase in the mean number of JavaScript bytes sent to
+        webpages over the last few years. Let's create an interactive version of
+        that graph!
+      </p>
+
+      <p>
+        I've chosen React for this component, and used <Link
+          href="https://react-chartjs-2.js.org/"
+          text="react-chartjs-2"
+        /> + <Link
+          href="https://www.chartjs.org/docs/latest/"
+          text="Chart.js"
+        /> to make things fairly simpler.
+      </p>
 
       <Island>
-        <h2 slot="title">Joe's recent top tunes</h2>
-        <h3>Thanks to <Icon name="bi:spotify" size={24} /> Spotify</h3>
+        <h2 class="text-xl font-bold mb-3">Interactive graph</h2>
+        <Graph client:visible />
+      </Island>
+
+      <p>
+        I loaded that by telling Astro that this is a client component, but
+        using the <Code code="client:visible" inline /> attribute to tell Astro to
+        load it when the component is visible. Here's the full code snippet:
+      </p>
+
+      <Code
+        code={`
+{/* Component for wrapping the component with an "island" style */}
+<Island>
+  <h2 class="text-xl font-bold mb-3">Interactive graph</h2>
+  <Graph client:visible />
+</Island>
+        `}
+        lang="html"
+      />
+
+      <p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p>
+
+      <Island>
+        <h2 class="text-xl font-bold mb-3">Joe's recent top tunes</h2>
+        <h3 class="text-bold font-bold mb-6">
+          From <Icon name="bi:spotify" size={24} class="inline" /> Spotify
+        </h3>
         <SpotifyList client:visible />
       </Island>
 
-      <Section>
-        <p></p>
-      </Section>
-    </Stack>
-  </main>
+      <p>Now chatty stuff</p>
 
-  <aside slot="aside">
-    <Island class="sticky">
-      <h2 slot="title">Logs</h2>
-      <Logs client:load />
-    </Island>
-  </aside>
-</Layout>
+      <Island>
+        <h2 class="text-xl font-bold mb-3">ChatGPT demo</h2>
+        <!-- <ChattyTracks client:idle /> -->
+        <Chatty client:visible />
+      </Island>
+    </Fragment>
 
-<style is:global>
-  :root {
-    --step--1: clamp(0.9375rem, 0.9148rem + 0.1136vw, 1rem);
-    --step-0: clamp(1.125rem, 1.0795rem + 0.2273vw, 1.25rem);
-    --step-1: clamp(1.35rem, 1.2727rem + 0.3864vw, 1.5625rem);
-    --step-2: clamp(1.62rem, 1.4989rem + 0.6057vw, 1.9531rem);
-    --step-3: clamp(1.9438rem, 1.7628rem + 0.9045vw, 2.4413rem);
-    --step-4: clamp(2.3325rem, 2.0709rem + 1.308vw, 3.0519rem);
-    --step-5: clamp(2.7994rem, 2.4301rem + 1.8466vw, 3.815rem);
+    <aside slot="aside">
+      <!-- 1024px -->
+      <Island class="sticky top-5 hidden lg:block">
+        <h2 class="text-xl font-bold mb-3">Logs</h2>
+        <Logs client:visible />
+      </Island>
+    </aside>
+  </Section>
 
-    /* colors */
-    --color-sea: hsl(188.85, 72.91%, 49.22%);
-    --color-beach: hsl(44.42, 63.64%, 76.27%);
-    --color-land: hsl(72 50% 50%);
-  }
+  <Section>
+    <Fragment slot="content">
+      <p>Final notes</p>
 
-  body {
-    background-color: var(--color-sea);
-    color: #111;
-    display: grid;
-    font-family: system-ui, sans-serif;
-    font-size: var(--step-0);
-    /* fixes a safari issue with font-size and clamp */
-    min-height: 0vw;
-    gap: 32px;
-    grid-template-columns: 1fr;
-    line-height: 1.6;
-    margin-inline: auto;
-    max-width: 840px;
-    padding: 16px;
-  }
-
-  @media screen and (min-width: 1100px) {
-    body {
-      gap: 0 32px;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-      max-width: 1200px;
-    }
-  }
-
-  /* typography */
-  :is(h1, h2, h3, h4, h5, h6) {
-    font-weight: bold;
-    line-height: 1.3;
-  }
-
-  h1 {
-    font-size: var(--step-4);
-  }
-  h2 {
-    font-size: var(--step-2);
-  }
-  /* h3 {
-    font-size: var(--step-3);
-  }
-  h4 {
-    font-size: var(--step-2);
-  }
-  h5 {
-    font-size: var(--step-1);
-  }
-  h6 {
-    font-size: var(--step-0);
-  } */
-
-  .sticky {
-    position: sticky;
-    top: 20px;
-  }
-</style>
+      <p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p>
+      <p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p><p>
+        Below is a component I've created that makes a Fetch call to an API,
+        which grabs 5 of my most-played songs recently from my own Spotify
+        account. The component takes that response and renders the list of
+        potentially-embarrassing tracks.
+      </p>
+    </Fragment>
+  </Section>
+</Base>

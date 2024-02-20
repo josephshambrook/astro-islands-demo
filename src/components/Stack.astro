@@ -2,13 +2,14 @@
 interface Props {
   tag?: string;
   space?: string;
+  class?: string;
 }
 
-const { tag = "div", space = "1.5rem", ...rest } = Astro.props;
+const { tag = "div", space = "1.5rem", class: classes, ...rest } = Astro.props;
 const Element = tag;
 ---
 
-<Element class:list={["stack"]} {...rest}>
+<Element class:list={["stack", classes]} {...rest}>
   <slot />
 </Element>
 

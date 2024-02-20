@@ -1,15 +1,19 @@
 ---
-import Stack from "@components/Stack.astro";
+import Divider from "./Divider.astro";
+import Stack from "./Stack.astro";
+const { withDivider = false } = Astro.props;
 ---
 
-<section>
-  <Stack>
-    <slot />
+<section
+  class={`grid grid-cols-subgrid col-span-full gap-8 ${
+    !Astro.slots.has("aside") && "justify-items-center"
+  }`}
+>
+  <Stack class={!Astro.slots.has("aside") ? "col-span-full max-w-3xl" : ""}>
+    <slot name="content" />
   </Stack>
+
+  <slot name="aside" />
 </section>
 
-<style>
-  section {
-    margin-block-end: 1.5rem;
-  }
-</style>
+{withDivider && <Divider class="col-span-full" />}

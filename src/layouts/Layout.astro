@@ -3,30 +3,12 @@ import Base from "./Base.astro";
 ---
 
 <Base>
-  <header>
-    <h1>🏝️ Astro Islands Demo</h1>
+  <header class="col-span-full">
+    <h1 class="text-5xl my-12 font-bold">🏝️ Astro Islands Demo</h1>
   </header>
   <slot name="main" />
   <slot name="aside" />
 </Base>
 
-<style>
-  header {
-    grid-column: 1 / -1;
-  }
-
-  h1 {
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-block-end: 1.5em;
-  }
-
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-</style>
+<!-- main wraps everything below heading -->
+<!-- each section contains div and aside -->

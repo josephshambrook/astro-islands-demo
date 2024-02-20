@@ -2,31 +2,26 @@
   "extends": "astro/tsconfigs/strict",
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "baseUrl": ".",
-    // Enable top-level await, and other modern ESM features.
+    "baseUrl": "/Users/josephshambrook/dev/astro-islands-demo",
     "target": "ESNext",
     "module": "ESNext",
-    // Enable node-style module resolution, for things like npm package imports.
     "moduleResolution": "node",
-    // https://gist.github.com/chrisgervang/59ed046c0a8d7c3a1be1b3416f8f2466
     "allowSyntheticDefaultImports": true,
-    // Enable JSON imports.
     "resolveJsonModule": true,
-    // Enable stricter transpilation for better output.
     "isolatedModules": true,
-    // Add type definitions for our Vite runtime and Astro images
     "types": ["vite/client", "astro/client"],
-    // allow jsx when checking types
-    "jsx": "react-jsx",
-    // skip type checking of all declaration files
+    "jsx": "preserve",
     "skipLibCheck": true,
-    // path aliases, to simplify imports
     "paths": {
       "@components/*": ["src/components/*"],
       "@data/*": ["src/data/*"],
+      "@images/*": ["src/images/*"],
+      "@islands/*": ["src/islands/*"],
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
-      "@state/*": ["src/state/*"]
-    }
+      "@state/*": ["src/state/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "jsxImportSource": "react"
   }
 }

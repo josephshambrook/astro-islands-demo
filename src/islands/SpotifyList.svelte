@@ -97,6 +97,7 @@
 {/await}
 
 <style>
+  /* grabbed these from my site, so less urgency to convert to tailwind */
   .list {
     list-style: none;
     padding-inline-start: 0;
