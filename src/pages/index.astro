@@ -193,8 +193,87 @@ import { Image } from "astro:assets";
     <Fragment slot="content">
       <h2 class="text-3xl font-bold">Islands within Astro</h2>
 
-      <p>[Details of how islands are used within Astro]</p>
-      <p>Code: <Code code="<Carousel client:idle />" inline /></p>
+      <p>
+        I won't go too into detail as <Link
+          href="https://docs.astro.build/en/concepts/islands/"
+          text={`Astro already have a great write-up on how Islands work and how to use them`}
+        />, but I'll give some of the basic stuff here.
+      </p>
+
+      <p>
+        Astro is a "server-first" web framework. It's aimed specifically at
+        content-rich websites, to make creating pages as easy and enjoyable as
+        possible, whilst maintaining a high bar on performance.
+      </p>
+
+      <p>
+        One really <strong>awesome</strong> feature of Astro is the ability to use
+        a mixture of UI frameworks at the same time, on the same website. This is
+        great if you're migrating from an existing website, or want to try different
+        frameworks within the same site, or you know one framework is rubbish to
+        use with certain things (my mind straightaway goes to working with forms
+        in React) and you'd rather use another.
+      </p>
+
+      <p>
+        I said Astro is a "server-first" web framework earlier, and by that, I
+        mean Astro renders all content at build-time on a server, before a
+        website is deployed. If you pass Astro a component written with React,
+        for example, it will render that component's HTML, and the resulting
+        output contains zero JavaScript. That is Astro's default behaviour, and
+        maintains that JavaScript is a feature to opt in to using, rather than
+        receiving by default whether it is needed or not.
+      </p>
+
+      <p>
+        When you do need a component to by rendered with JavaScript intact
+        though, you can tell Astro through "client directives". These are
+        attributes that tell Astro which components to hydrate in the browser,
+        and when they should be hydrated.
+      </p>
+
+      <p>Here's an example:</p>
+
+      <Code
+        lang="astro"
+        code={`
+/*
+ * Say <Carousel /> is a React component.
+ * The following will tell Astro to render its HTML only
+ */
+<Carousel />
+
+/*
+ * Adding a client directive like \`client:idle\`, tells Astro
+ * that this component needs to be hydrated with JavaScript in
+ * the browser. In this case, the JS will be loaded when the
+ * browser becomes "idle" (i.e. not doing any heavy work).
+ */
+<Carousel client:idle />
+      `}
+      />
+
+      <p>
+        In the example above, the <Code
+          code="<Carousel />"
+          lang="astro"
+          inline
+        /> component is given the <Code code="client:idle" lang="js" inline /> attribute,
+        which tells Astro to hydrate the component with JavaScript when the browser
+        is idle.
+      </p>
+
+      <p>
+        There are more client directives too, which extends the power of Astro's
+        ability to hydrate components when needed. <Link
+          href="https://docs.astro.build/en/reference/directives-reference/#client-directives"
+          text="The full list is in their docs"
+        />, and the best one is probably <Code
+          code="client:visible"
+          lang="js"
+          inline
+        />.
+      </p>
     </Fragment>
   </Section>
 
@@ -268,19 +347,9 @@ import { Image } from "astro:assets";
 
       <p>
         I loaded that by telling Astro that this is a client component, but
-        using the <Code code="client:visible" inline /> attribute to tell Astro to
-        load it when the component is visible. Here's the full code snippet:
+        using the <Code code="client:visible" inline lang="js" /> attribute to tell
+        Astro to load it when the component is visible. Here's the full code snippet:
       </p>
-
-      <Code
-        code={`
-{/* My own component to apply the "island" styles and add a title */}
-<Island title="Interactive graph">
-  <Graph client:visible />
-</Island>
-        `}
-        lang="html"
-      />
 
       <p>
         So next, let's grab some data through an API call and display it. Below
