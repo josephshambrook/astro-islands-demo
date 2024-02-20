@@ -1,7 +1,7 @@
 {
   "name": "@josephshambrook/astro-islands-demo",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -10,14 +10,12 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/prism": "^3.0.0",
     "@astrojs/react": "^3.0.10",
-    "@astrojs/solid-js": "^4.0.1",
     "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.0.8",
     "@iconify-json/bi": "^1.1.23",
-    "@tanstack/solid-query": "^5.22.2",
+    "@iconify-json/devicon": "^1.1.35",
     "@tanstack/vue-query": "^5.22.2",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
@@ -28,7 +26,6 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "solid-js": "^1.8.15",
     "tailwindcss": "^3.4.1",
     "tailwindcss-fluid-type": "^2.0.3",
     "vue": "^3.4.19"

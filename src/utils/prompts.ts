@@ -1,5 +1,24 @@
 import type { PromptContentType } from "src/types";
 
+export const contentTypes: PromptContentType[] = [
+  {
+    key: "song",
+    text: "Song",
+  },
+  {
+    key: "poem",
+    text: "Poem",
+  },
+  {
+    key: "film-plot",
+    text: "Film plot",
+  },
+  {
+    key: "book-idea",
+    text: "Book idea",
+  },
+];
+
 export const createPrompt = (contentType: PromptContentType["key"]) => {
   const songTitleExplanation =
     "The following songs are separated as the song title, followed by a dash, followed by the artist:";
@@ -22,3 +41,6 @@ export const createPrompt = (contentType: PromptContentType["key"]) => {
 
   return "";
 };
+
+export const getContentTypeByKey = (contentTypeKey: PromptContentType["key"]) =>
+  contentTypes.find((ct) => ct.key === contentTypeKey);

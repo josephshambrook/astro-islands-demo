@@ -1,13 +1,33 @@
 ---
-const { class: classes, ...rest } = Astro.props;
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  class?: string;
+  title: string;
+  framework?: "react" | "vuejs" | "svelte" | "solidjs";
+}
+
+const { class: classes, title, framework, ...rest } = Astro.props;
+
+const icon = framework ? `devicon:${framework}` : null;
 ---
 
 <section
   class:list={[
-    "bg-[#a6bf40] rounded-4xl border-amber-200 border-8 border-solid p-4 shadow-island",
+    "bg-[#a6bf40] rounded-4xl border-amber-200 border-8 border-solid px-4 pb-4 shadow-island",
     classes,
   ]}
   {...rest}
 >
+  <div class="flex align-middle my-4">
+    <h2 class="flex-1 text-xl font-bold mt-2">{title}</h2>
+    {
+      icon && (
+        <div class="rounded-full bg-white p-4">
+          <Icon name={icon} />
+        </div>
+      )
+    }
+  </div>
   <slot />
 </section>

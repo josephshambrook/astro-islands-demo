@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { addLog } from "@state/LogStore";
 import { useQuery, useQueryClient } from "@tanstack/vue-query";
-import { createPrompt } from "@utils/prompts";
+import {
+  contentTypes,
+  createPrompt,
+  getContentTypeByKey,
+} from "@utils/prompts";
 import type { PromptContentType, PromptResponse } from "src/types";
 import { ref, watch } from "vue";
 
@@ -10,28 +14,17 @@ const queryClient = useQueryClient();
 const API_URL =
   "https://automation.medayo.com/webhook/6b997217-ce45-40be-9388-9397f6cb5d0d";
 
-const chosenPromptContentType = ref("song");
-
-const contentTypes: PromptContentType[] = [
-  {
-    key: "song",
-    text: "Song",
-  },
-  {
-    key: "poem",
-    text: "Poem",
-  },
-  {
-    key: "film-plot",
-    text: "Film plot",
-  },
-  {
-    key: "book-idea",
-    text: "Book idea",
-  },
-];
+const chosenPromptContentType = ref<PromptContentType["key"]>("song");
 
 const sendPrompt = async (chosenContentType: PromptContentType["key"]) => {
+  const contentTypeText = getContentTypeByKey(chosenContentType);
+
+  if (contentTypeText?.text) {
+    addLog(
+      `ChatGPT has begun generating a new ${contentTypeText.text.toLowerCase()}`,
+    );
+  }
+
   const prompt = createPrompt(chosenContentType);
   const url = API_URL + "?prompt=" + encodeURIComponent(prompt);
   const response = await fetch(url, {
@@ -42,8 +35,7 @@ const sendPrompt = async (chosenContentType: PromptContentType["key"]) => {
 
 const { isFetching, isError, data, error, refetch } = useQuery({
   queryKey: ["prompt", chosenPromptContentType.value],
-  queryFn: () =>
-    sendPrompt(chosenPromptContentType.value as PromptContentType["key"]),
+  queryFn: () => sendPrompt(chosenPromptContentType.value),
   staleTime: 5 * 60 * 1000,
 });
 
@@ -60,7 +52,10 @@ const onPromptSelection = (newContentType: PromptContentType["key"]) => {
 };
 
 watch(data, () => {
-  addLog("New ChatGPT response received");
+  const contentTypeText = getContentTypeByKey(chosenPromptContentType.value);
+  if (contentTypeText?.text) {
+    addLog(`ChatGPT generated a new ${contentTypeText.text.toLowerCase()}`);
+  }
 });
 </script>
 

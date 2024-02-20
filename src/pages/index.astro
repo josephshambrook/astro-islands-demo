@@ -157,11 +157,14 @@ import { Image } from "astro:assets";
         When React arrived and gained a massive amount of popularity in the
         mid-2010s, it turned websites into full JavaScript machines whether they
         needed it or not. The HTML shipped to the browser typically contained a
-        single element (usually <Code code='<div id="app"></div>' inline />),
-        and the entire website was rendered with JavaScript into that element.
-        It meant the burden of rendering a website was passed onto the browser,
-        rather than rendered on the server like websites built with your
-        favourite languages like PHP.
+        single element (usually <Code
+          code='<div id="app"></div>'
+          lang="html"
+          inline
+        />), and the entire website was rendered with JavaScript into that
+        element. It meant the burden of rendering a website was passed onto the
+        browser, rather than rendered on the server like websites built with
+        your favourite languages like PHP.
       </p>
 
       <p>
@@ -189,6 +192,7 @@ import { Image } from "astro:assets";
   <Section withDivider>
     <Fragment slot="content">
       <h2 class="text-3xl font-bold">Islands within Astro</h2>
+
       <p>[Details of how islands are used within Astro]</p>
       <p>Code: <Code code="<Carousel client:idle />" inline /></p>
     </Fragment>
@@ -197,20 +201,23 @@ import { Image } from "astro:assets";
   <Section withDivider>
     <Fragment slot="content">
       <h2 class="text-3xl font-bold">Demo time!</h2>
+
       <p>Enough waffling, how about some live examples?</p>
 
       <p>
         First off, this webpage is created in Astro, and contains a mix of
         static Astro components, and UI libraries like React and Svelte just for
-        fun.
+        fun. I've added the icons for which framework is powering each island
+        too, so you can see there's a mix!
       </p>
 
       <p>
         If you happen to be viewing this on a desktop browser, you could scroll
         up to the top of the page, open up the browser developer tools, go to
-        the Network tab, and then hit refresh in the browser, you should see
-        zero JavaScript resources being loaded. For those viewing this on a
-        mobile browser, it should look like this:
+        the Network tab, and then hit refresh in the browser. Up until this demo
+        section, you should see that zero JavaScript resources have been needed
+        loaded. For the benefit of those viewing this on a mobile browser, it
+        should look like this:
       </p>
 
       <figure>
@@ -255,8 +262,7 @@ import { Image } from "astro:assets";
         /> to make things fairly simpler.
       </p>
 
-      <Island>
-        <h2 class="text-xl font-bold mb-3">Interactive graph</h2>
+      <Island title="Interactive graph" framework="react">
         <Graph client:visible />
       </Island>
 
@@ -268,9 +274,8 @@ import { Image } from "astro:assets";
 
       <Code
         code={`
-{/* Component for wrapping the component with an "island" style */}
-<Island>
-  <h2 class="text-xl font-bold mb-3">Interactive graph</h2>
+{/* My own component to apply the "island" styles and add a title */}
+<Island title="Interactive graph">
   <Graph client:visible />
 </Island>
         `}
@@ -278,33 +283,68 @@ import { Image } from "astro:assets";
       />
 
       <p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
+        So next, let's grab some data through an API call and display it. Below
+        is a component I created for my own website that makes a request to an
+        API of my own, and grabs 5 of my most-played songs recently from my own
+        Spotify account. The component takes that response and renders the list
+        of (potentially-embarrassing) tracks.
       </p>
 
-      <Island>
-        <h2 class="text-xl font-bold mb-3">Joe's recent top tunes</h2>
+      <Island title="Joe's recent top tunes" framework="svelte">
         <h3 class="text-bold font-bold mb-6">
           From <Icon name="bi:spotify" size={24} class="inline" /> Spotify
         </h3>
         <SpotifyList client:visible />
       </Island>
 
-      <p>Now chatty stuff</p>
+      <p>
+        Just like before, this island only loaded when we scrolled down to it.
+        If we wanted to though, we could set up Astro to use Server-Side
+        Rendering, and fetch and render this data at run-time on the server to
+        be displayed. Just like the good ol' days.
+      </p>
 
-      <Island>
-        <h2 class="text-xl font-bold mb-3">ChatGPT demo</h2>
-        <!-- <ChattyTracks client:idle /> -->
-        <Chatty client:visible />
+      <p>
+        Finally, something more fun. My friends at <Link
+          href="https://medayo.com"
+          text="Medayo"
+        /> created an API for me that would make the same call for my top Spotify
+        songs as above, but then ask ChatGPT to generate something interesting based
+        on those songs. I've then added a selection of what type of content we'd
+        like. Want a cringey song? No prob.
+      </p>
+
+      <Island title="ChatGPT demo" framework="vuejs">
+        <Chatty client:visible={{ rootMargin: "400px" }} />
       </Island>
+
+      <p>
+        Once again, this island is only rendered when the island is visible. The
+        main thing to note here though is that this API call can be pretty slow
+        to respond, as it's asking ChatGPT for a response, and so there is an
+        advantage to calling the API sooner rather than later. To do that, Astro
+        allows passing in a <Code code="rootMargin" inline lang="javascript" /> to
+        the <Code code="client:visible" inline lang="javascript" /> attribute, meaning
+        Astro will start to hydrate that island's JavaScript when the margin around
+        the island enters the browser viewport, saving a bit of time.
+      </p>
+
+      <Code
+        lang="html"
+        code={`
+<Island title="ChatGPT demo" framework="vuejs">
+  <Chatty client:visible={{ rootMargin: "400px" }} />
+</Island>
+      `}
+      />
     </Fragment>
 
     <aside slot="aside">
-      <!-- 1024px -->
-      <Island class="sticky top-5 hidden lg:block">
-        <h2 class="text-xl font-bold mb-3">Logs</h2>
+      <Island
+        title="Logs"
+        framework="svelte"
+        class="sticky top-5 hidden lg:block"
+      >
         <Logs client:visible />
       </Island>
     </aside>
@@ -312,64 +352,47 @@ import { Image } from "astro:assets";
 
   <Section>
     <Fragment slot="content">
-      <p>Final notes</p>
+      <h2 class="text-3xl font-bold">Wrap up</h2>
 
       <p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
+        The islands architecture principle helps us web developers gain a little
+        more control over the JavaScript we send to users. JavaScript is not a
+        bad thing - it's essential for some of the best experiences on the web.
+        There are also some projects where client-side rendering is still
+        acceptable, such as JavaScript-rich dashboards or mapping applications.
+        For most of the rest of the websites on the web though, JavaScript
+        should be treated as a commodity.
       </p>
+
       <p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
-      </p><p>
-        Below is a component I've created that makes a Fetch call to an API,
-        which grabs 5 of my most-played songs recently from my own Spotify
-        account. The component takes that response and renders the list of
-        potentially-embarrassing tracks.
+        Probably the best thing about the islands approach within Astro is the
+        server-first approach. By making static content the default output of
+        all components, it means the developer is explicitly <strong
+          >opting in</strong
+        > to sending JavaScript to the browser, rather than something that may be
+        discovered down the line when a site is deployed. It makes the whole action
+        of sending JavaScript more intentional.
+      </p>
+
+      <p>
+        Astro is not alone in this space too. <Link
+          href="https://markojs.com/"
+          text="Marko"
+        />, a declarative UI framework created by eBay engineers, uses a similar
+        approach of partial hydration to send only the minimal JavaScript
+        needed. Fresh is a web framework that runs on Deno and also uses islands
+        (and created this <Link
+          href="https://deno.com/blog/intro-to-islands"
+          text="really helpful guide to islands"
+        /> too). All of these frameworks are pushing the limits of ensuring JavaScript
+        is used and sent more responsibly than before.
+      </p>
+
+      <p>
+        Thanks for reading! <Link
+          href="https://github.com/josephshambrook/astro-islands-demo"
+          text="This website is also available on Github"
+        />, so do have a dig through the code if you're curious.
       </p>
     </Fragment>
   </Section>
