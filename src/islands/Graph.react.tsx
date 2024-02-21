@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -23,15 +24,13 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  maintainAspectRatio: false,
   interaction: {
     intersect: false,
     mode: "index" as const,
   },
   animation: {
     delay: 500,
-    onComplete: function () {
-      addLog("Graph rendered and animated");
-    },
   },
   elements: {
     point: {
@@ -44,22 +43,6 @@ export const options = {
       labels: {
         boxHeight: 3,
       },
-    },
-    title: {
-      display: true,
-      text: "Mean amount of JS bytes distributed on webpages",
-      padding: {
-        top: 10,
-        bottom: 20,
-      },
-      font: {
-        weight: "bold" as const,
-        size: 20,
-      },
-    },
-    subtitle: {
-      display: true,
-      text: "Figures provided by annual Web Almanac Report",
     },
   },
 };
@@ -74,25 +57,30 @@ export const data = {
       data: [391, 444, 463, 509],
       borderColor: "#802653",
       backgroundColor: "#802653",
-      // backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
     {
       label: "Mobile",
       data: [359, 411, 427, 461],
       borderColor: "#43244f",
       backgroundColor: "#43244f",
-      // backgroundColor: "rgba(53, 162, 235, 0.5)",
     },
   ],
 };
 
 export const Graph = () => {
+  useEffect(() => {
+    addLog("Graph component mounted");
+  }, []);
+
   return (
-    <div className="bg-white flex flex-col relative items-center mt-4 py-5 px-10">
-      <Line options={options} data={data} />
-      {/* <p className="text-xs mt-2">
+    <>
+      <p>Mean amount of JS bytes distributed on webpages</p>
+      <div className="bg-white flex flex-col relative items-center justify-center mt-4 py-5 px-2 h-[400px]">
+        <Line options={options} data={data} />
+      </div>
+      <p className="text-xs mt-2">
         Figures provided by annual Web Almanac Report
-      </p> */}
-    </div>
+      </p>
+    </>
   );
 };

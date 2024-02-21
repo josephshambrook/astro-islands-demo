@@ -316,19 +316,19 @@ import { Image } from "astro:assets";
         been some JavaScript popping up. That JavaScript is powering the island
         on the right, which will display logs as we interact with the islands
         below. However, because the logs are not viewable by those on a mobile
-        device, the JavaScript would not have been loaded for that island! The
-        logs that are displayed within that island are being stored in a local
-        JavaScript store, powered by a dependency called <Link
+        device, the JavaScript will only be loaded for those on a desktop
+        browser! The logs that are displayed within that island are being stored
+        in a local JavaScript store, powered by a dependency called <Link
           href="https://github.com/nanostores/nanostores"
           text="nanostores"
         />.
       </p>
 
       <p>
-        Time for our first demo island. Earlier, I showed an image of a graph,
-        visualising the increase in the mean number of JavaScript bytes sent to
-        webpages over the last few years. Let's create an interactive version of
-        that graph!
+        Time for our <strike>first</strike> second demo island. Earlier, I showed
+        an image of a graph, visualising the increase in the mean number of JavaScript
+        bytes sent to webpages over the last few years. Let's create an interactive
+        version of that graph!
       </p>
 
       <p>
@@ -350,6 +350,19 @@ import { Image } from "astro:assets";
         using the <Code code="client:visible" inline lang="js" /> attribute to tell
         Astro to load it when the component is visible. Here's the full code snippet:
       </p>
+
+      <Code
+        lang="html"
+        code={`
+/*
+ * <Island /> is my own component to add island styles,
+ * a title and a framework icon
+ */
+<Island title="Interactive graph" framework="react">
+  <Graph client:visible />
+</Island>
+      `}
+      />
 
       <p>
         So next, let's grab some data through an API call and display it. Below
@@ -460,7 +473,7 @@ import { Image } from "astro:assets";
       <p>
         Thanks for reading! <Link
           href="https://github.com/josephshambrook/astro-islands-demo"
-          text="This website is also available on Github"
+          text="The code for this demo is also available on GitHub"
         />, so do have a dig through the code if you're curious.
       </p>
     </Fragment>
